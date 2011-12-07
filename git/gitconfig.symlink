@@ -1,0 +1,28 @@
+[user]
+	name = Norbert Wojtowicz
+[core]
+	excludesfile = /home/norbert/.gitignore_global
+	autocrlf = input
+[color]
+	interactive = true
+	status = true
+	branch = true
+	diff = true
+[alias]
+	st = status
+	ci = commit
+	cc = commit
+	co = checkout
+	br = branch
+	s = status
+	a = add
+	ap = add --patch
+	d = diff
+	dc = diff --cached
+	v = show
+	l = log --pretty=oneline -n 10
+	ll = log -n 10
+	cp = cherry-pick
+	;; ri = rebase -i HEAD~10
+	;; sh = !git-sh
+	;; ro = !git fetch origin && git reset --hard origin/master
