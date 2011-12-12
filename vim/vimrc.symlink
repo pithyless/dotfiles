@@ -204,3 +204,42 @@ command! -range B <line1>,<line2>call <SID>RubyBlockSwitchDelimiters()
 vmap <Leader>B :call <SID>RubyBlockSwitchDelimiters()<cr>
 " Fuck tpope
 xmap s <Plug>VSurround
+
+" =============
+"
+
+set ignorecase                  " ignore case when searching
+set smartcase                   " ignore case if search pattern is all lowercase,
+                                "    case-sensitive otherwise
+set hlsearch                    " highlight search terms
+set incsearch                   " show search matches as you type
+set gdefault                    " search/replace "globally" (on a line) by default
+set listchars=tab:▸\ ,trail:·,extends:#,nbsp:·
+
+" Change the mapleader from \ to ,
+let mapleader=","
+
+" Thanks to Steve Losh for this liberating tip
+" See http://stevelosh.com/blog/2010/09/coming-home-to-vim
+nnoremap / /\v
+vnoremap / /\v
+
+" Quickly get out of insert mode without your fingers having to leave the
+" home row (either use 'jj' or 'jk')
+inoremap jj <Esc>
+
+" Clears the search register
+map <silent> <leader>/ :nohlsearch<CR>
+
+" Remap j and k to act as expected when used on long, wrapped, lines
+nnoremap j gj
+nnoremap k gk
+
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+nnoremap <leader>g <C-w>v<C-w>l  " split window vertically
+nnoremap <leader>G <C-w>s<C-w>j  " split window vertically
+
