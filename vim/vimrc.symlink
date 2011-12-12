@@ -86,6 +86,7 @@ set statusline+=%=                           " right align
 set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
 autocmd BufNewFile,BufRead *.css set fdm=marker fmr={,}
+autocmd BufNewFile,BufRead *.json set ft=javascript
 
 "{{{ Ruby block delimiter conversion: do end <=> { }
 "Copyright © 2005 Mauricio Fernandez
