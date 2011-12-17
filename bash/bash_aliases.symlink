@@ -30,3 +30,5 @@ alias git='GIT_AUTHOR_EMAIL=$(
         p=$(dirname $p)
       done) /usr/bin/git'
 alias g=git
+
+alias start_mongo="mongod run --config /usr/local/Cellar/mongodb/2.0.1-x86_64/mongod.conf&"
