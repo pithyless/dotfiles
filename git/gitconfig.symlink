@@ -1,5 +1,6 @@
 [user]
-	name = Norbert Wojtowicz
+  name = Norbert Wojtowicz
+  email = wojtowicz.norbert@gmail.com
 [core]
 	excludesfile = ~/.gitignore_global
 	autocrlf = input
