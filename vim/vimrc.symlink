@@ -235,6 +235,9 @@ map <silent> <leader>/ :nohlsearch<CR>
 nnoremap j gj
 nnoremap k gk
 
+" Since I never use the ; key anyway
+nnoremap ; :
+
 " Easy window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
