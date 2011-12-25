@@ -78,6 +78,7 @@ set_prompt () {
 }
 
 precmd() {
-  title "zsh" "%m" "%55<...<%~"
+  # title "zsh" "%m" "%55<...<%~"
+  print -Pn "\e]2;%~\a" # title bar prompt
   set_prompt
 }
