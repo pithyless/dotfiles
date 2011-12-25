@@ -25,6 +25,7 @@ git_bundles = [
   "git://github.com/vim-ruby/vim-ruby.git",
   "git://github.com/vim-scripts/Gist.vim.git",
   "git://github.com/altercation/vim-colors-solarized.git",
+  "git://github.com/kchmck/vim-coffee-script.git",
 ]
 
 vim_org_scripts = [
@@ -36,7 +37,7 @@ vim_org_scripts = [
 require 'fileutils'
 require 'open-uri'
 
-bundles_dir = File.join(File.dirname(__FILE__), "bundle")
+bundles_dir = File.join(File.dirname(__FILE__), "vim.symlink", "bundle")
 
 FileUtils.cd(bundles_dir)
 
