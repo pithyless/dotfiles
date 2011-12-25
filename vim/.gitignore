@@ -1,0 +1,7 @@
+vim.symlink/bundle/Gist.vim/doc/tags
+vim.symlink/bundle/snipmate.vim/doc/tags
+vim.symlink/bundle/textile.vim/doc/tags
+vim.symlink/bundle/vim-git/doc/tags
+vim.symlink/bundle/vim-matchit/doc/tags
+vim.symlink/bundle/vim-ruby/doc/tags
+vim.symlink/.netrwhist
