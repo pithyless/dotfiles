@@ -1,17 +1,25 @@
+zstyle ':chpwd:profiles:/home/norbert/anixe(|/|/*)'  profile anixe
 
-if [ ${OSTYPE:0:5} = "linux" ]; then
-  alias git='GIT_AUTHOR_EMAIL=$(
-      p=$(pwd)
-      while [[ $p != "$HOME" ]]; do
-        [ -e $p/.gitemail ] && cat $p/.gitemail && break
-        p=$(dirname $p)
-      done) GIT_COMMITTER_EMAIL=$(
-      p=$(pwd)
-      while [[ $p != "$HOME" ]]; do
-        [ -e $p/.gitemail ] && cat $p/.gitemail && break
-        p=$(dirname $p)
-      done) /usr/bin/git'
-fi
+# configuration for profile 'default':
+chpwd_profile_default()
+{
+  [[ ${profile} == ${CHPWD_PROFILE} ]] && return 1
+  # print "chpwd(): Switching to profile: default"
+
+  export GIT_AUTHOR_EMAIL="wojtowicz.norbert@gmail.com"
+  export GIT_COMMITTER_EMAIL="wojtowicz.norbert@gmail.com"
+}
+
+# configuration for profile 'anixe':
+chpwd_profile_anixe()
+{
+  [[ ${profile} == ${CHPWD_PROFILE} ]] && return 1
+  # print "chpwd(): Switching to profile: $profile"
+
+  export GIT_AUTHOR_EMAIL="norbert.wojtowicz@anixe.pl"
+  export GIT_COMMITTER_EMAIL="norbert.wojtowicz@anixe.pl"
+}
+
 alias g='git'
 
 alias gpull='git pull --prune'
