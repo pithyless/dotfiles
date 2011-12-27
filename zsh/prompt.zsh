@@ -40,15 +40,6 @@ need_push () {
   fi
 }
 
-rvm_prompt(){
-  if $(which rvm &> /dev/null)
-  then
-    echo "($(rvm tools identifier)%{$reset_color%})"
-  else
-    echo ""
-  fi
-}
-
 # This keeps the number of todos always available the right hand side of my
 # command line. I filter it to only count those tagged as "+next", so it's more
 # of a motivation to clear out the list.
@@ -68,11 +59,17 @@ todo(){
   fi
 }
 
+my-rvm-prompt () {
+  # TODO: use local vars
+  GEMSET=(${(s:@:)GEM_HOME})
+  echo ${RUBY_VERSION}@$GEMSET[2]
+}
+
 directory_name(){
   echo "%{$fg[yellow]%}%~%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(directory_name) $(rvm_prompt) $(git_dirty)$(need_push)\n› '
+export PROMPT=$'\n$(directory_name) ($(my-rvm-prompt)) $(git_dirty)$(need_push)\n› '
 set_prompt () {
   # export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
 }
