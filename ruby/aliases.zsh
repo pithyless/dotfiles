@@ -4,5 +4,4 @@ alias rc='rails console'
 alias p='padrino'
 alias pc='padrino console'
 
-alias b='bundle'
-alias be='bundle exec'
+alias rvm-global='rvm use 1.9.2@global'
