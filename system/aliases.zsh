@@ -7,7 +7,7 @@ alias llt="ls -Flhtr"
 alias dff="df -h"
 alias dus="du -sh"
 
-if [ ${OSTYPE:0:5} = "linux" ]; then
+if [[ $IS_LINUX -eq 1 ]]; then
   alias ack="ack-grep"
 fi
 
