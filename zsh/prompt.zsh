@@ -59,17 +59,11 @@ todo(){
   fi
 }
 
-my-rvm-prompt () {
-  # TODO: use local vars
-  GEMSET=(${(s:@:)GEM_HOME})
-  echo ${RUBY_VERSION}@$GEMSET[2]
-}
-
 directory_name(){
   echo "%{$fg[yellow]%}%~%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(directory_name) ($(my-rvm-prompt)) $(git_dirty)$(need_push)\n› '
+export PROMPT=$'\n$(directory_name) ($(rvm-prompt)) $(git_dirty)$(need_push)\n› '
 set_prompt () {
   # export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
 }
