@@ -1,0 +1,8 @@
+if [[ $HAS_BREW -eq 1 ]]; then
+  gimme() { brew install $1 }
+  _gimme() { reply=(`brew search`) }
+elif [[ $HAS_APT -eq 1 ]]; then
+  gimme() { sudo apt-get install $1 }
+elif [[ $HAS_YUM -eq 1 ]]; then
+  gimme() { su -c 'yum install $1' }
+fi
