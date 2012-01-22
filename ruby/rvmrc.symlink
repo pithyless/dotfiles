@@ -1,1 +1,7 @@
-export rvm_project_rvmrc=1
+export rvm_gemset_create_on_use_flag=1    # Gemsets appear automagically
+export rvm_install_on_use_flag=1          # Ruby versions appear automagically
+export rvm_make_flag="-j 5"               # 5 compiler threads for my Core i5
+export rvm_archflags="-arch x86_64"       # Compile to 64-bit
+export rvm_project_rvmrc=1                # Use project-specific .rvmrc files
+export rvm_project_rvmrc_default=1        # Revert to defaults on leaving project
+export rvm_pretty_print_flag=1            # Nice colors
