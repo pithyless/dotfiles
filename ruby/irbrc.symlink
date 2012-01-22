@@ -9,11 +9,6 @@ IRB.conf[:PROMPT_MODE] = :SIMPLE
 IRB.conf[:AUTO_INDENT] = true
 
 class Object
-  # list methods which aren't in superclass
-  def local_methods(obj = self)
-    (obj.methods - obj.class.superclass.instance_methods).sort
-  end
-  
   # print documentation
   #
   #   ri 'Array#pop'
@@ -29,6 +24,46 @@ class Object
   end
 end
 
+module Kernel
+  def m(object=Object.new, pattern=nil, local_only=false)
+    if object.class.name == "DBus::ProxyObjectInterface"
+      methods = object.methods.keys.sort
+    else
+      methods = object.public_methods(!local_only).sort
+    end
+    methods = methods.grep pattern unless pattern.nil?
+    methods
+  end
+end
+
 def r
   reload!
+end
+
+begin
+  require 'hirb'
+  Hirb::View.enable
+rescue LoadError
+  puts 'Missing hirb gem'
+end
+
+def view_hash(hash)
+  a = hash.is_a?(Hash) ? [hash] : hash
+  Hirb::Helpers::Table.render a, :vertical => true
+end
+
+if defined?(Hirb)
+  Hirb.add_view Hash, :method => :view_hash
+end
+
+# Hirb.disable # TODO: hashes with different keys are not displayed!
+
+if defined? RUBY_DESCRIPTION
+  puts RUBY_DESCRIPTION
+else
+  if defined? JRUBY_VERSION
+    puts "ruby #{RUBY_VERSION} (jruby #{JRUBY_VERSION}) (#{RUBY_RELEASE_DATE} patchlevel #{RUBY_PATCHLEVEL}) [#{RUBY_PLATFORM}]"
+  else
+    puts "ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE} patchlevel #{RUBY_PATCHLEVEL}) [#{RUBY_PLATFORM}]"
+  end
 end
