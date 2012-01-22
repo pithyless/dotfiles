@@ -40,24 +40,6 @@ def r
   reload!
 end
 
-begin
-  require 'hirb'
-  Hirb::View.enable
-rescue LoadError
-  puts 'Missing hirb gem'
-end
-
-def view_hash(hash)
-  a = hash.is_a?(Hash) ? [hash] : hash
-  Hirb::Helpers::Table.render a, :vertical => true
-end
-
-if defined?(Hirb)
-  Hirb.add_view Hash, :method => :view_hash
-end
-
-# Hirb.disable # TODO: hashes with different keys are not displayed!
-
 if defined? RUBY_DESCRIPTION
   puts RUBY_DESCRIPTION
 else
