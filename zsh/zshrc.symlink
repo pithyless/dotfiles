@@ -1,8 +1,14 @@
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
-# Initialize some things first
-source $ZSH/zsh/boot.zsh
+# Setup our base PATH
+export PATH="$ZSH/bin:/usr/local/bin:${PATH}"
+
+# What are we dealing with?
+if [[ $(uname) = 'Linux' ]]; then IS_LINUX=1; fi
+if [[ $(uname) = 'Darwin' ]]; then; IS_MAC=1; fi
+if [[ -x `which brew` ]]; then HAS_BREW=1; fi
+if [[ -x `which apt-get` ]]; then HAS_APT=1; fi
 
 # source every .zsh file in this rep
 for config_file ($ZSH/**/*.zsh) source $config_file
