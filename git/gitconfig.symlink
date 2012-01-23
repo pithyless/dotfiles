@@ -1,29 +1,34 @@
 [user]
   name = Norbert Wojtowicz
   email = wojtowicz.norbert@gmail.com
+[init]
+  templatedir = ~/.git_template
 [core]
-	excludesfile = ~/.gitignore_global
-	autocrlf = input
+  excludesfile = ~/.gitignore_global
+  autocrlf = input
+  editor = /usr/bin/vim
 [color]
-	interactive = true
-	status = true
-	branch = true
-	diff = true
+  interactive = true
+  status = true
+  branch = true
+  diff = true
 [alias]
-	st = status
-	c  = commit
-	cc = commit
-	co = checkout
-	br = branch
-	s = status
-	a = add
-	ap = add --patch
-	d = diff
-	dc = diff --cached
-	v = show
-	l = log --pretty=oneline -n 10
-	ll = log -n 10
-	cp = cherry-pick
-	;; ri = rebase -i HEAD~10
-	;; sh = !git-sh
-	;; ro = !git fetch origin && git reset --hard origin/master
+  st = status
+  c  = commit
+  cc = commit
+  co = checkout
+  br = branch
+  s = status
+  a = add
+  ap = add --patch
+  d = diff
+  dc = diff --cached
+  v = show
+  l = log --pretty=oneline -n 10
+  ll = log -n 10
+  cp = cherry-pick
+  ctags = !.git/hooks/ctags
+
+  ;; ri = rebase -i HEAD~10
+  ;; sh = !git-sh
+  ;; ro = !git fetch origin && git reset --hard origin/master
