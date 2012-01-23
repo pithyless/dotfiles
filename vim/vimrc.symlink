@@ -58,7 +58,7 @@ hi PmenuThumb guifg=Yellow guibg=Black
 if has("gui_running")
   set lines=80 
   set columns=120 
-  set guifont=Anonymous\ Pro\ 12
+  set guifont=Anonymous\ Pro\ 11
 endif
 
 if has("gui_macvim")
