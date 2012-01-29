@@ -1,7 +1,7 @@
 if [[ $IS_LINUX -eq 1 ]]; then
+  export PATH="/opt/mongodb/bin:${PATH}"
   alias mongo-up="sudo /etc/init.d/mongodb start"
   alias mongo-down="sudo /etc/init.d/mongodb stop"
-  alias mongo="/opt/mongodb/bin/mongo"
 fi
 
 if [[ $IS_MAC -eq 1 ]]; then

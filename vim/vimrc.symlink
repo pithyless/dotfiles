@@ -58,7 +58,7 @@ hi PmenuThumb guifg=Yellow guibg=Black
 if has("gui_running")
   set lines=80 
   set columns=120 
-  set guifont=Anonymous\ Pro\ 12
+  set guifont=Anonymous\ Pro\ 11
   colorscheme solarized
   set guioptions=egmrLt
 endif
@@ -217,8 +217,6 @@ set listchars=tab:▸\ ,trail:·,extends:#,nbsp:·
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " remove trailing whitespace on save
 autocmd FileType ruby,python autocmd BufWritePre <buffer> :%s/\s\+$//e
-
-
 
 " Mappings file
 source $HOME/.vim/mappings.vim
