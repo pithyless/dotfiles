@@ -70,6 +70,14 @@ if has("gui_macvim")
   set antialias
   colorscheme solarized
   set guioptions=egmrLt
+
+  " highlight Cursor guibg=white
+  " highlight iCursor guifg=#eee8d5 guibg=#6B8FDB
+  highlight iCursor guifg=#eee8d5 guibg=#268bd2
+  set guicursor=n-v-c:block-Cursor
+  set guicursor+=i:ver100-iCursor
+  set guicursor+=n-v-c:blinkon0
+  set guicursor+=i:blinkon0
 endif
 
 " Nice statusbar

@@ -35,7 +35,9 @@ vnoremap / /\v
 nnoremap ; :
 
 " Quickly get out of insert mode
-inoremap jj <Esc>
+nnoremap <C-Space> a
+inoremap <C-Space> <Esc>
+inoremap jk <Esc>
 
 " Remap j and k to act as expected when used on long, wrapped, lines
 nnoremap j gj
