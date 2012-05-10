@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+require 'rb-fsevent'
+
+def print_banner
+  puts "Usage: fswatch [path-to-watch] [things to execute in shell]"
+end
+
+def run_command
+  cmd = ARGV[1..-1].join(' ')
+  puts "Running: #{cmd}"
+  system cmd
+end
+
+def humanize_path(path)
+  home = ENV['HOME']
+  if path =~ Regexp.new("^#{home}")
+    "~" + path[home.length..-1]
+  else
+    path
+  end
+end
+
+if ARGV.length < 2
+  print_banner
+  exit 0
+end
+
+path = File.expand_path(ARGV[0])
+opts = {:no_defer => true}
+
+puts "Watching: #{humanize_path(path)}"
+run_command
+
+fsevent = FSEvent.new
+fsevent.watch(path, opts) do |arg|
+  run_command
+end
+fsevent.run
