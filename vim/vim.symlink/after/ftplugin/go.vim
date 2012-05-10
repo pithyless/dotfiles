@@ -11,3 +11,5 @@ set noexpandtab
 set rtp+=$GOROOT/misc/vim
 
 autocmd BufWritePre *.go :silent Fmt
+
+setlocal omnifunc=gocomplete#Complete
