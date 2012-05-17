@@ -1,3 +1,7 @@
+highlight iCursor guifg=#fdf6e3 guibg=#268bd2
+set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkon0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Helpers
