@@ -4,7 +4,7 @@
 [init]
   templatedir = ~/.git_template
 [core]
-  excludesfile = ~/.gitignore_global
+  excludesfile = /Users/norbert/.gitignore_global
   autocrlf = input
   editor = /usr/bin/vim
 [color]
@@ -32,3 +32,6 @@
   ;; ri = rebase -i HEAD~10
   ;; sh = !git-sh
   ;; ro = !git fetch origin && git reset --hard origin/master
+
+[merge]
+  tool = meld
