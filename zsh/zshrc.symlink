@@ -4,6 +4,11 @@ export ZSH=$HOME/.dotfiles
 # Setup our base PATH
 export PATH="$ZSH/bin:/usr/local/bin:${PATH}"
 
+# Add Go to PATH
+export GOROOT="/usr/local/Cellar/go/1.0.1"
+export GOBIN="${GOROOT}/bin"
+export PATH="${GOBIN}:${PATH}"  
+
 # What are we dealing with?
 if [[ $(uname) = 'Linux' ]]; then IS_LINUX=1; fi
 if [[ $(uname) = 'Darwin' ]]; then; IS_MAC=1; fi
