@@ -63,7 +63,11 @@ directory_name(){
   echo "%{$fg[yellow]%}%~%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(directory_name) ($(rvm-prompt)) $(git_dirty)$(need_push)\n› '
+ruby_version_prompt () {
+  ruby --version | awk '{print $2}'
+}
+
+export PROMPT=$'\n$(directory_name) ($(ruby_version_prompt)) $(git_dirty)$(need_push)\n› '
 set_prompt () {
   # export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
 }
