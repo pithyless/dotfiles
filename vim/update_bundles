@@ -18,6 +18,8 @@ git_bundles = [
 
   "git://github.com/altercation/vim-colors-solarized.git",  # pretty ViM
 
+  "https://github.com/kien/ctrlp.vim",                  # smart file open
+
   # Ruby Stuff
   "git://github.com/vim-ruby/vim-ruby.git",             # ruby
   "git://github.com/tpope/vim-endwise.git",             # add 'end' in ruby
