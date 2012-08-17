@@ -1,3 +1,5 @@
+alias ssh-hotx-tunnel="ssh -fNn deploy@hotx.resfinity.com"
+
 alias l="ls -F"
 alias la="ls -Fa"
 alias ll="ls -Flh"
