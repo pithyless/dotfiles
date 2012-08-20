@@ -9,6 +9,8 @@ alias llt="ls -Flhtr"
 alias dff="df -h"
 alias dus="du -sh"
 
+alias psa="ps aux | grep -i"
+
 if [[ $IS_LINUX -eq 1 ]]; then
   alias ack="ack-grep"
 fi
