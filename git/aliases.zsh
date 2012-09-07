@@ -1,4 +1,4 @@
-zstyle ':chpwd:profiles:/Users/norbert/anixe(|/|/*)'  profile anixe
+zstyle ':chpwd:profiles:/Users/norbert/dev/anixe(|/|/*)'  profile anixe
 
 # configuration for profile 'default':
 chpwd_profile_default()
