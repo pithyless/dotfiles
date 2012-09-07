@@ -20,12 +20,11 @@ chpwd_profile_anixe()
   export GIT_COMMITTER_EMAIL="norbert.wojtowicz@anixe.pl"
 }
 
-alias g='git'
-
 alias gpull='git pull --prune'
 alias gl="git log -n 20 --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias gpush='git push origin HEAD'
 alias ga='git add'
+alias gap='git add -p'
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias gc='git commit'

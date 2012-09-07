@@ -76,6 +76,9 @@ setting('Save screenshots to the desktop',
 setting('Save screenshots in PNG format',
         'com.apple.screencapture type', 'png')
 
+setting('Calendar: show event times',
+        'com.apple.ical "Show time in Month View"', 1)
+
 # `killall Finder`
 
 
