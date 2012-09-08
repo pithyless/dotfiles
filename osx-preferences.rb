@@ -64,7 +64,6 @@ setting('Set a blazingly fast keyboard repeat rate',
         'NSGlobalDomain KeyRepeat', 0)
 
 
-
 setting('Require password after sleep',
         'com.apple.screensaver askForPassword', 1)
 setting('Require password 5 seconds after sleep',
@@ -78,6 +77,12 @@ setting('Save screenshots in PNG format',
 
 setting('Calendar: show event times',
         'com.apple.ical "Show time in Month View"', 1)
+
+setting('Finder: open in $HOME',
+        'com.apple.finder NewWindowTargetPath', 'file://localhost/Users/norbert/')
+
+setting('Finder: show status bar',
+        'com.apple.finder ShowStatusBar', true)
 
 # `killall Finder`
 
