@@ -1,4 +1,4 @@
-let g:ctrlp_map = '<c-p>'
+let g:ctrlp_map = '<Leader>,'
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 2  " nearest .git, .hg, .svn
 let g:ctrlp_match_window_bottom = 0   " show window on top
@@ -11,3 +11,6 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
   \ 'file': '\.exe$\|\.so$\|\.dll$',
   \ }
+
+nmap <leader>. :CtrlPClearCache<cr>:CtrlP<cr>
+nmap <leader>, :CtrlPMixed<cr>
