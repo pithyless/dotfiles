@@ -23,7 +23,7 @@ alias -g T='|tail'
 
 # Go to parent directories without `cd'
 setopt autocd
-cdpath=($HOME $HOME/dev/anixe)
+cdpath=($HOME $HOME/dev/anixe $HOME/dev/github)
 alias c=cd
 alias -g ...='../..'
 alias -g ....='../../..'
