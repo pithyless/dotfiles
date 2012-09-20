@@ -13,4 +13,4 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 nmap <leader>. :CtrlPClearCache<cr>:CtrlP<cr>
-nmap <leader>, :CtrlPMixed<cr>
+nmap <leader>, :CtrlP<cr>
