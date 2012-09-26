@@ -1,0 +1,13 @@
+#!/bin/sh -x
+#
+# The script pulls down the latest changes from the 
+# central origin/master branch, and rebases your 
+# local feature-branch on this new master. 
+#
+# http://object.io/site/2010/hack-and-ship/
+set -o errexit
+CURRENT=`git branch | grep '\*' | awk '{print $2}'`
+git checkout master
+git pull --rebase origin master
+git checkout ${CURRENT}
+git rebase master
