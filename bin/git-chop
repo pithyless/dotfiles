@@ -1,0 +1,13 @@
+#!/bin/sh -x
+#
+# The script changes the current branch to master, 
+# and then deletes the branch you was previously on.
+#
+# If you give a branch-name as an argument that will 
+# be the new current branch.
+#
+# http://object.io/site/2011/meet-chop/
+set -o errexit
+CURRENT_BRANCH=$(git branch | grep '\*')
+git checkout ${1:-"master"} || exit 1
+git branch -d ${CURRENT_BRANCH:2}
