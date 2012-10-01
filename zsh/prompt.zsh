@@ -64,7 +64,7 @@ directory_name(){
 }
 
 ruby_version_prompt () {
-  ruby --version | awk '{print $2}'
+  rbenv version | awk '{print $1}'
 }
 
 export PROMPT=$'\n$(directory_name) ($(ruby_version_prompt)) $(git_dirty)$(need_push)\n› '
