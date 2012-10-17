@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# Merge a remote topic branch to master and cleanup after yourself
+
+die () {
+  echo >&2 "$@"
+  exit 1
+}
+
+[ "$#" -eq 1 ] || die "Usage: git-ship TOPIC_BRANCH"
+
+# refresh remote branches
+git branch -r > /dev/null
+
+# merge, push, cleanup
+git checkout $1 && git pull && git checkout master && git pull && git merge $1 && git push && git branch -d $1 && git push origin --delete $1
