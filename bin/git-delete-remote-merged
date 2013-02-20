@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Delete all remote branches that have been merged into MASTER.
+
+git branch -r --merged master | sed 's/ *origin\///' | grep -v 'master$' | xargs -I% git push origin :%
