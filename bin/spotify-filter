@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+def track_artist
+  `osascript -e 'tell application "Spotify" to artist of current track'`.strip
+end
+
+def track_duration
+  Integer(`osascript -e 'tell application "Spotify" to duration of current track'`.strip)
+end
+
+def spam_info
+  [ track_artist, track_duration ]
+end
+
+def spam?
+  track_artist == 'Spotify' or
+    track_duration < 40
+end
+
+@mute = false
+
+def mute_on
+  `audiodevice output "Soundflower (2ch)"`
+  @mute = true
+end
+
+def mute_off
+  `audiodevice output internal`
+  @mute = false
+end
+
+while true do
+  if spam?
+    unless @mute
+      mute_on
+      puts "Spotify ad"
+      p spam_info
+    end
+  elsif @mute
+    mute_off
+    puts 'Rock on!'
+  end
+
+  sleep 1
+end
