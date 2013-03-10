@@ -5,7 +5,12 @@ def track_artist
 end
 
 def track_duration
-  Integer(`osascript -e 'tell application "Spotify" to duration of current track'`.strip)
+  `osascript -e 'tell application "Spotify" to duration of current track'`.strip.to_i
+end
+
+def track_remaining_time
+  position = `osascript -e 'tell application "Spotify" to player position'`.strip.to_i
+  track_duration - position
 end
 
 def spam_info
@@ -14,7 +19,7 @@ end
 
 def spam?
   track_artist == 'Spotify' or
-    track_duration < 40
+    (track_duration > 0 && track_duration < 40)
 end
 
 @mute = false
@@ -41,5 +46,6 @@ while true do
     puts 'Rock on!'
   end
 
-  sleep 1
+  sleep_duration = [1, track_remaining_time].max
+  sleep sleep_duration
 end
