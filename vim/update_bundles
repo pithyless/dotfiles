@@ -20,6 +20,8 @@ git_bundles = [
 
   "https://github.com/kien/ctrlp.vim",                  # smart file open
 
+  "https://github.com/kana/vim-fakeclip",               # copy+paste for terminal OSX
+
   # Ruby Stuff
   "git://github.com/vim-ruby/vim-ruby.git",             # ruby
   "git://github.com/tpope/vim-endwise.git",             # add 'end' in ruby

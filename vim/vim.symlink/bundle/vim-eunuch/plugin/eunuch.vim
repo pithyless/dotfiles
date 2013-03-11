@@ -7,6 +7,10 @@ if exists('g:loaded_eunuch') || &cp || v:version < 700
 endif
 let g:loaded_eunuch = 1
 
+function! s:separator()
+  return !exists('+shellslash') || &shellslash ? '/' : '\\'
+endfunction
+
 command! -bar -bang Unlink :
       \ let v:errmsg = '' |
       \ let s:file = fnamemodify(bufname(<q-args>),':p') |
@@ -18,33 +22,66 @@ command! -bar -bang Unlink :
 
 command! -bar -bang Remove :Unlink<bang>
 
-command! -bar -nargs=1 -bang -complete=file Rename :
-      \ let s:file = expand('%:p') |
-      \ setlocal modified |
-      \ keepalt saveas<bang> <args> |
-      \ if s:file !=# expand('%:p') |
-      \   call delete(s:file) |
+command! -bar -nargs=1 -bang -complete=file Move :
+      \ let s:src = expand('%:p') |
+      \ let s:dst = expand(<q-args>) |
+      \ if isdirectory(s:dst) |
+      \   let s:dst .= (s:dst[-1:-1] =~# '[\\/]' ? '' : s:separator()) .
+      \     fnamemodify(s:src, ':t') |
       \ endif |
-      \ unlet s:file
+      \ let s:dst = substitute(simplify(s:dst), '^\.\'.s:separator(), '', '') |
+      \ if <bang>1 && filereadable(s:dst) |
+      \   exe 'keepalt saveas '.fnameescape(s:dst) |
+      \ elseif rename(s:src, s:dst) |
+      \   echoerr 'Failed to rename "'.s:src.'" to "'.s:dst.'"' |
+      \ else |
+      \   setlocal modified |
+      \   exe 'keepalt saveas! '.fnameescape(s:dst) |
+      \   if s:src !=# expand('%:p') |
+      \     execute 'bwipe '.fnameescape(s:src) |
+      \   endif |
+      \ endif |
+      \ unlet s:src |
+      \ unlet s:dst
+
+function! s:Rename_complete(A, L, P) abort
+  let sep = s:separator()
+  let prefix = expand('%:p:h').sep
+  let files = split(glob(prefix.a:A.'*'), "\n")
+  call filter(files, 'simplify(v:val) !=# simplify(expand("%:p"))')
+  call map(files, 'v:val[strlen(prefix) : -1] . (isdirectory(v:val) ? sep : "")')
+  return join(files + ['..'.s:separator()], "\n")
+endfunction
+
+command! -bar -nargs=1 -bang -complete=custom,s:Rename_complete Rename
+      \ Move<bang> %:h/<args>
+
+command! -bar -nargs=1 Chmod :
+      \ echoerr get(split(system('chmod '.<q-args>.' -- '.shellescape(expand('%'))), "\n"), 0, '') |
 
 command! -bar -bang -complete=file -nargs=+ Find   :call s:Grep(<q-bang>, <q-args>, 'find')
 command! -bar -bang -complete=file -nargs=+ Locate :call s:Grep(<q-bang>, <q-args>, 'locate')
 function! s:Grep(bang,args,prg) abort
   let grepprg = &l:grepprg
   let grepformat = &l:grepformat
+  let shellpipe = &shellpipe
   try
     let &l:grepprg = a:prg
     setlocal grepformat=%f
+    if &shellpipe ==# '2>&1| tee' || &shellpipe ==# '|& tee'
+      let &shellpipe = "| tee"
+    endif
     execute 'grep'.a:bang.' '.a:args
   finally
     let &l:grepprg = grepprg
     let &l:grepformat = grepformat
+    let &shellpipe = shellpipe
   endtry
 endfunction
 
 command! -bar SudoWrite :
       \ setlocal nomodified |
-      \ silent exe 'write !sudo tee % >/dev/null' |
+      \  exe (has('gui_running') ? '' : 'silent') 'write !sudo tee % >/dev/null' |
       \ let &modified = v:shell_error
 
 command! -bar W :call s:W()
@@ -56,7 +93,7 @@ function! s:W() abort
     let seen[bufnr('')] = 1
     write
   endif
-  tabdo windo if !&readonly && expand('%') !=# '' && !has_key(seen, bufnr('')) | silent write | let seen[bufnr('')] = 1 | endif
+  tabdo windo if !&readonly && &buftype =~# '^\%(acwrite\)\=$' && expand('%') !=# '' && !has_key(seen, bufnr('')) | silent write | let seen[bufnr('')] = 1 | endif
   execute 'tabnext '.tab
   execute win.'wincmd w'
 endfunction

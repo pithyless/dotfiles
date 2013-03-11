@@ -44,19 +44,37 @@ Many of these features can be switched off. See section Configuration.
 
 ## Commands and Mappings
 
-Vim-nerdtree-tabs defines two commands:
+Vim-nerdtree-tabs provides these commands:
 
-* `:NERDTreeTabsToggle` switches NERDTree on/off for all tabs.
+* `:NERDTreeTabsOpen` switches NERDTree on for all tabs.
 
-* `:NERDTreeMirrorToggle` acts as `:NERDTreeToggle`, but smarter: When opening,
+* `:NERDTreeTabsClose` switches NERDTree off for all tabs.
+
+* `:NERDTreeTabsToggle` toggles NERDTree on/off for all tabs.
+
+* `:NERDTreeMirrorOpen` acts as `:NERDTreeMirror`, but smarter: When opening,
   it first tries to use an existing tree (i.e. previously closed in this tab or
   perform a mirror of another tab's tree). If all this fails, a new tree is
-  created. It is recommended that you use this command instead of `:NERDTreeToggle`.
+  created. It is recommended that you use this command instead of
+  `:NERDTreeMirror`.
+
+* `:NERDTreeMirrorToggle` toggles NERDTree on/off in current tab, using
+  the same behavior as `:NERDTreeMirrorOpen`.
+
+* `:NERDTreeSteppedOpen` focuses the NERDTree, opening one first if none is present.
+
+* `:NERDTreeSteppedClose` unfocuses the NERDTree, or closes/hides it if it was
+  not focused.
 
 There are also plug-mappings available with the same functionality:
 
+* `<plug>NERDTreeTabsOpen`
+* `<plug>NERDTreeTabsClose`
 * `<plug>NERDTreeTabsToggle`
+* `<plug>NERDTreeMirrorOpen`
 * `<plug>NERDTreeMirrorToggle`
+* `<plug>NERDTreeSteppedOpen`
+* `<plug>NERDTreeSteppedClose`
 
 ## Configuration
 
@@ -69,6 +87,9 @@ values:
 
 * `g:nerdtree_tabs_open_on_console_startup` (default: `0`)  
   Open NERDTree on console vim startup
+
+* `let g:nerdtree_tabs_no_startup_for_diff` (default: `1`)  
+  Do not open NERDTree if vim starts in diff mode
 
 * `g:nerdtree_tabs_smart_startup_focus` (default: `1`)  
   On startup, focus NERDTree if opening a directory, focus file if opening
@@ -96,6 +117,10 @@ values:
   not in the NERDTree window. (Note that this can get annoying if you use
   NERDTree's feature "open in new tab silently", as you will lose focus on the
   NERDTree.)
+
+* `g:nerdtree_tabs_startup_cd` (default: `1`)  
+  When given a directory name as a command line parameter when launching Vim,
+  `:cd` into it.
 
 ### Example
 
