@@ -6,4 +6,5 @@ vim.symlink/bundle/vim-eunuch/doc/tags
 vim.symlink/bundle/vim-unimpaired/doc/tags
 vim.symlink/bundle/vim-matchit/doc/tags
 vim.symlink/bundle/vim-ruby/doc/tags
+vim.symlink/bundle/vim-fakeclip/doc/tags
 vim.symlink/.netrwhist
