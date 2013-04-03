@@ -32,7 +32,6 @@ cucumber
 foreman
 guard
 haml
-heroku
 html2haml
 jasmine
 padrino
