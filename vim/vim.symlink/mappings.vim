@@ -15,6 +15,9 @@ set showmode
 " Toggle numbers
 nmap <ESC>n :set relativenumber!<CR>
 
+" Pretty JSON
+:command PrettyJson :%!python -mjson.tool
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Leaders
