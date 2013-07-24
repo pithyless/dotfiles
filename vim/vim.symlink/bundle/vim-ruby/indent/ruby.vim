@@ -2,7 +2,6 @@
 " Language:		Ruby
 " Maintainer:		Nikolai Weibull <now at bitwi.se>
 " URL:			https://github.com/vim-ruby/vim-ruby
-" Anon CVS:		See above site
 " Release Coordinator:	Doug Kearns <dougkearns@gmail.com>
 
 " 0. Initialization {{{1
@@ -37,9 +36,9 @@ let s:syng_strcom = '\<ruby\%(Regexp\|RegexpDelimiter\|RegexpEscape' .
       \ '\|Symbol\|String\|StringDelimiter\|StringEscape\|ASCIICode' .
       \ '\|Interpolation\|NoInterpolation\|Comment\|Documentation\)\>'
 
-" Regex of syntax group names that are strings or symbols.
+" Regex of syntax group names that are strings.
 let s:syng_string =
-      \ '\<ruby\%(String\|Symbol\|Interpolation\|NoInterpolation\|StringEscape\)\>'
+      \ '\<ruby\%(String\|Interpolation\|NoInterpolation\|StringEscape\)\>'
 
 " Regex of syntax group names that are strings or documentation.
 let s:syng_stringdoc =
@@ -123,6 +122,11 @@ endfunction
 " Check if the character at lnum:col is inside a string or documentation.
 function s:IsInStringOrDocumentation(lnum, col)
   return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_stringdoc
+endfunction
+
+" Check if the character at lnum:col is inside a string delimiter
+function s:IsInStringDelimiter(lnum, col)
+  return synIDattr(synID(a:lnum, a:col, 1), 'name') == 'rubyStringDelimiter'
 endfunction
 
 " Find line above 'lnum' that isn't empty, in a comment, or in a string.
@@ -375,6 +379,14 @@ function GetRubyIndent(...)
   " If we are in a multi-line string or line-comment, don't do anything to it.
   if s:IsInStringOrDocumentation(clnum, matchend(line, '^\s*') + 1)
     return indent('.')
+  endif
+
+  " If we are at the closing delimiter of a "<<" heredoc-style string, set the
+  " indent to 0.
+  if line =~ '^\k\+\s*$'
+        \ && s:IsInStringDelimiter(clnum, 1)
+        \ && search('\V<<'.line, 'nbW') > 0
+    return 0
   endif
 
   " 3.3. Work on the previous line. {{{2
