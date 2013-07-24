@@ -2,6 +2,8 @@ autoload colors && colors
 # cheers, @ehrenmurdick
 # http://github.com/ehrenmurdick/config/blob/master/zsh/prompt.zsh
 
+zmodload zsh/datetime # needed for EPOCHSECONDS
+
 git_branch() {
   echo $(/usr/bin/git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})
 }
@@ -67,6 +69,17 @@ ruby_version_prompt () {
   rbenv version | awk '{print $1}'
 }
 
+time_taken () {
+  if (( LASTTIME > 0)); then
+    let delta=${EPOCHSECONDS}-${LASTTIME}
+    if (( $delta > 1 )); then
+      echo "[${delta}s]"
+    fi
+  fi
+  unset LASTTIME
+}
+
+export RPROMPT=$'$(time_taken)'
 export PROMPT=$'\n$(directory_name) ($(ruby_version_prompt)) $(git_dirty)$(need_push)\n› '
 set_prompt () {
   # export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
@@ -76,4 +89,8 @@ precmd() {
   # title "zsh" "%m" "%55<...<%~"
   print -Pn "\e]2;%~\a" # title bar prompt
   set_prompt
+}
+
+preexec() {
+  LASTTIME="$EPOCHSECONDS"
 }
