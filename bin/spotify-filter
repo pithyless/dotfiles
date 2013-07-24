@@ -34,6 +34,8 @@ def mute_off
   @mute = false
 end
 
+mute_off
+
 while true do
   if spam?
     unless @mute
@@ -46,6 +48,7 @@ while true do
     puts 'Rock on!'
   end
 
-  sleep_duration = [1, track_remaining_time].max
+  # puts "Sleeping for #{sleep_duration}"
+  sleep_duration = 1
   sleep sleep_duration
 end
