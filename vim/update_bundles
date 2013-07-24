@@ -15,6 +15,7 @@ git_bundles = [
 
   "git://github.com/ervandew/supertab.git",             # all your completion needs via <tab>
   "git://github.com/godlygeek/tabular.git",             # align your code
+  "git://github.com/mileszs/ack.vim.git",               # search your code
 
   "git://github.com/altercation/vim-colors-solarized.git",  # pretty ViM
 
