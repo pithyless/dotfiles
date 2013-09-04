@@ -25,11 +25,11 @@ Many of these features can be switched off. See section Configuration.
 
         cd ~/.vim/bundle
         git clone https://github.com/jistr/vim-nerdtree-tabs.git
-        
+
     Or **through Vundle**:
 
         Bundle 'jistr/vim-nerdtree-tabs'
-        
+
     Or **through Janus**:
 
         cd ~/.janus
@@ -93,7 +93,7 @@ values:
 
 * `g:nerdtree_tabs_smart_startup_focus` (default: `1`)  
   On startup, focus NERDTree if opening a directory, focus file if opening
-  a file.
+  a file. (When set to `2`, always focus file window after startup).
 
 * `g:nerdtree_tabs_open_on_new_tab` (default: `1`)  
   Open NERDTree on new tab creation (if NERDTree was globally opened by

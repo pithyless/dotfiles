@@ -28,6 +28,8 @@ set cpo&vim
 " 1. Variables {{{1
 " ============
 
+let s:js_keywords = '^\s*\(break\|case\|catch\|continue\|debugger\|default\|delete\|do\|else\|finally\|for\|function\|if\|in\|instanceof\|new\|return\|switch\|this\|throw\|try\|typeof\|var\|void\|while\|with\)'
+
 " Regex of syntax group names that are or delimit string or are comments.
 let s:syng_strcom = 'string\|regex\|comment\c'
 
@@ -55,12 +57,15 @@ let s:msl_regex = '\%([\\*+/.:([]\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)' . s:line_
 let s:one_line_scope_regex = '\<\%(if\|else\|for\|while\)\>[^{;]*' . s:line_term
 
 " Regex that defines blocks.
-let s:block_regex = '\%({\)\s*\%(|\%([*@]\=\h\w*,\=\s*\)\%(,\s*[*@]\=\h\w*\)*|\)\=' . s:line_term
+let s:block_regex = '\%([{[]\)\s*\%(|\%([*@]\=\h\w*,\=\s*\)\%(,\s*[*@]\=\h\w*\)*|\)\=' . s:line_term
 
-" Var string
-let s:var_regex = '\s*var\(.*\),$'
+let s:var_stmt = '^\s*var'
 
 let s:comma_first = '^\s*,'
+let s:comma_last = ',\s*$'
+
+let s:ternary = '^\s\+[?|:]'
+let s:ternary_q = '^\s\+?'
 
 " 2. Auxiliary Functions {{{1
 " ======================
@@ -77,7 +82,7 @@ endfunction
 
 " Check if the character at lnum:col is inside a multi-line comment.
 function s:IsInMultilineComment(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_multiline
+  return !s:IsLineComment(a:lnum, a:col) && synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_multiline
 endfunction
 
 " Check if the character at lnum:col is a line comment.
@@ -145,46 +150,53 @@ function s:RemoveTrailingComments(content)
 endfunction
 
 " Find if the string is inside var statement (but not the first string)
-function s:InVarStatement(lnum)
+function s:InMultiVarStatement(lnum)
   let lnum = s:PrevNonBlankNonString(a:lnum - 1)
 
+"  let type = synIDattr(synID(lnum, indent(lnum) + 1, 0), 'name')
+
+  " loop through previous expressions to find a var statement
   while lnum > 0
     let line = getline(lnum)
 
-    " if line has var statement, return its number
-    if (line =~ s:var_regex)
-      return lnum
+    " if the line is a js keyword
+    if (line =~ s:js_keywords)
+      " check if the line is a var stmt
+      " if the line has a comma first or comma last then we can assume that we
+      " are in a multiple var statement
+      if (line =~ s:var_stmt)
+        return lnum
+      endif
+
+      " other js keywords, not a var
+      return 0
     endif
 
     let lnum = s:PrevNonBlankNonString(lnum - 1)
   endwhile
 
+  " beginning of program, not a var
   return 0
 endfunction
 
 " Find line above with beginning of the var statement or returns 0 if it's not
 " this statement
 function s:GetVarIndent(lnum)
-  let lvar = s:InVarStatement(a:lnum)
+  let lvar = s:InMultiVarStatement(a:lnum)
   let prev_lnum = s:PrevNonBlankNonString(a:lnum - 1)
-  let prev_lvar = s:InVarStatement(prev_lnum)
 
-  if (lvar)
+  if lvar
     let line = s:RemoveTrailingComments(getline(prev_lnum))
 
-    " if the line doesn't end in a comma, return to regular indent
-    if (line !~ ',\s*$')
-      return indent(lvar)
+    " if the previous line doesn't end in a comma, return to regular indent
+    if (line !~ s:comma_last)
+      return indent(prev_lnum) - &sw
     else
-      return indent(lvar) + &sw * 2
+      return indent(lvar) + &sw
     endif
   endif
 
-  if (prev_lvar)
-    return indent(prev_lvar)
-  endif
-
-  return 'null'
+  return -1
 endfunction
 
 
@@ -294,7 +306,7 @@ function GetJavascriptIndent()
   if col > 0 && !s:IsInStringOrComment(v:lnum, col)
     call cursor(v:lnum, col)
 
-    let lvar = s:InVarStatement(v:lnum)
+    let lvar = s:InMultiVarStatement(v:lnum)
     if lvar
       let prevline_contents = s:RemoveTrailingComments(getline(prevline))
 
@@ -308,7 +320,7 @@ function GetJavascriptIndent()
           return indent(prevline)
         " otherwise we indent 1 level
         else
-          return indent(prevline) + &sw
+          return indent(lvar) + &sw
         endif
       endif
     endif
@@ -330,16 +342,24 @@ function GetJavascriptIndent()
     return indent(prevline) - &sw
   endif
 
+  if (line =~ s:ternary)
+    if (getline(prevline) =~ s:ternary_q)
+      return indent(prevline)
+    else
+      return indent(prevline) + &sw
+    endif
+  endif
+
   " If we are in a multi-line comment, cindent does the right thing.
   if s:IsInMultilineComment(v:lnum, 1) && !s:IsLineComment(v:lnum, 1)
     return cindent(v:lnum)
   endif
 
   " Check for multiple var assignments
-  let var_indent = s:GetVarIndent(v:lnum)
-  if var_indent !~ 'null'
-    return var_indent
-  endif
+"  let var_indent = s:GetVarIndent(v:lnum)
+"  if var_indent >= 0
+"    return var_indent
+"  endif
 
   " 3.3. Work on the previous line. {{{2
   " -------------------------------
