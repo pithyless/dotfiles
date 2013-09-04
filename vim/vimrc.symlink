@@ -231,3 +231,8 @@ autocmd FileType coffee,javascript,ruby,python autocmd BufWritePre <buffer> :%s/
 " Mappings file
 source $HOME/.vim/mappings.vim
 
+"""""""""""""""""""""""""""""""""
+map <leader>tf <ESC>:let g:test_file = "<C-r>%"<CR>
+map <leader>tl <ESC>:let g:test_file = "<C-r>%:<C-r>=line(".")<CR>"<CR>
+map <leader>tr <ESC>:w<CR>:!bin/rspec <C-r>=g:test_file<CR><CR>
+map <leader>ta :w<CR>:!bin/rspec<CR>
