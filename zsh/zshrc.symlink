@@ -2,7 +2,7 @@
 export ZSH=$HOME/dev/github/pithyless/dotfiles
 
 # Setup our base PATH
-export PATH="$ZSH/bin:/usr/local/bin:${PATH}"
+export PATH="$ZSH/bin:/usr/local/bin:`brew --prefix`/bin:${PATH}"
 
 # Add Go to PATH
 export GOROOT="/usr/local/Cellar/go/1.0.1"
